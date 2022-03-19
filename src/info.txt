@@ -1,0 +1,57 @@
+there is another property called "isFetching" which tells you weather 
+your useQuery is fetching data or not
+useQuery by default caches data for 5 min
+so whenever you want to see that data is shows you the cached data
+inorder to improve the user experiance
+and in background it fetches the record and when fetched
+it automatically updates the content giving you the latest 
+data.
+you can change the default cache time from 5min by giving third
+arugment in useQuery i.e. an object
+{
+  cacheTime:5000 // this will set the cache time for 5 sec
+}
+
+-----------------------------------------------------------------------------------
+there is another feature which is staleTime which allows you to prohibit 
+no of network request that you made
+by default staleTime is set to 0 but you can change it by
+passing it to third parameter just like cacheTime
+{
+  staleTime:3000
+}
+now the background fetch which we mentioned in the above section 
+will not happen during this 3sec.
+
+------------------------------------------------------------------------------------
+if you want to do POLLING by fetching api in regular intervals then
+
+{
+  refetchInterval:200
+}
+this will refetch the data at interval of 2sec
+this is also called polling
+
+--------------------------------------------------------------------
+if you want to fetch on click of button or associated event then
+you need to set enabled:false the the useQuery
+by passing the argumen same as above
+then destructure refetch from useQuery
+on put this on onClick
+e.g.
+const{isLoading, data, refetch} = useQuery('your-key',handleFetch,{
+  enabled:false
+}) 
+<button onClick={refetch}>Click</button>
+
+---------------------------------------------------------------------
+if you want to perform any side effects after the query complete
+you can do it by utilizing onSuccess and onError
+
+const{data} = useQuery('your-key', handleFetch,{
+  onSuccess,
+  onError
+})
+just define these two function with same name(ES6)
+
+--------------------------------------------------------------------
